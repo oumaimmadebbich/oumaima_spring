@@ -1,11 +1,16 @@
 package tn.esprit.test1.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.*;
 
 import java.io.Serializable;
 
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Universite implements Serializable {
     @Getter
     @Id
