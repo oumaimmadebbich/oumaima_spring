@@ -15,6 +15,9 @@ public class Chambre implements Serializable {
     private Long numeroChambre;
     private TypeChambre typeChambre;
 
+    public static void setBloc(Bloc bloc) {
+    }
+
     public  enum TypeChambre{
         Simple , Double , Triple
     }

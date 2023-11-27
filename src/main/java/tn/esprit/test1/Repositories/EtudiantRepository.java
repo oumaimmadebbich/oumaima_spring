@@ -8,4 +8,7 @@ public interface EtudiantRepository extends JpaRepository<Etudiant,Long> {
 
     Etudiant findByNomEtudiantAndPrenomEtudiant (String nomEtudiant , String prenomEtudiant);
 
+    Etudiant findByNomAndPrenom(String nomEt, String prenomEt);
+
+    Etudiant findByCin(long cinEtudiant);
 }

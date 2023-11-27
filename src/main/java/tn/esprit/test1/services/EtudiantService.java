@@ -40,8 +40,16 @@ public class EtudiantService implements IEtudiantService {
     }
 
     public Etudiant affecterEtudiantAReservation(String nomEt, String prenomEt, String idReservation) {
-        Reservation r = reservationRepository.findById(idReservation).get();
-        return Etudiant;
+        Reservation reservation = reservationRepository.findById(Long.valueOf(idReservation)).orElse(null);
 
+        if (reservation != null) {
+            Etudiant etudiant = etudiantRepository.findByNomAndPrenom(nomEt, prenomEt);
+            if (etudiant != null) {
+                reservation.setEtudiant(etudiant);
+                reservationRepository.save(reservation);
+                return etudiant;
+            }
+        }
+        return null;
     }
 }
