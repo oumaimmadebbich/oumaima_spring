@@ -18,4 +18,10 @@ public class Reservation implements Serializable {
 
     @ManyToMany
     private Set<Etudiant> etudiants;
+
+    public void setChambre(Chambre chambre) {
+    }
+
+    public void setEtudiant(Etudiant etudiant) {
+    }
 }

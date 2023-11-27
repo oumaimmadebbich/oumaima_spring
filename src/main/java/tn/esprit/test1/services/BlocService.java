@@ -12,11 +12,11 @@ public class BlocService {
     ChambreRepository chambreRepository;
 
     public Bloc affecterChambresABloc (List<Long> numChambre, Long idBloc){
-        Bloc bloc= BlocRepository.findById(idBloc).get();
+        Bloc bloc = BlocRepository.findById(idBloc).get();
         List<Chambre> chambres =(List<Chambre>) ChambreRepository.findAllById(numChambre);
         Chambre.setBloc(bloc);
         BlocRepository.save(bloc);
-    }
+
     return Bloc ;
-}
+}}
 
