@@ -14,4 +14,6 @@ public interface IEtudiantService {
     Etudiant retrieveEtudiant(Long idEtudiant);
 
     void removeEtudiant(Long idEtudiant);
+    List<Etudiant> addEtudiants (List<Etudiant> etudiants);
+
 }

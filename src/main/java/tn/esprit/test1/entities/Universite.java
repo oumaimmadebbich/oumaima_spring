@@ -3,27 +3,20 @@ package tn.esprit.test1.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.io.Serializable;
-
-@Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-@ToString
-public class Universite implements Serializable {
-    @Getter
+@RequiredArgsConstructor
+@Entity
+public class Universite {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="idUniversite")
     private  Long idUniversite;
-    @Getter
+    @Column(unique = true)
+    @NonNull
     private String nomUniversite;
-    @Getter
-    private String adresse ;
-
-
-    @OneToOne
-    @JoinColumn(name = "idFoyer")
+    private String adresse;
+    @OneToOne(mappedBy = "universite")
     private Foyer foyer;
 }
+

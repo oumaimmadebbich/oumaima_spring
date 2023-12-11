@@ -1,20 +1,22 @@
 package tn.esprit.test1.services;
 
+import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Service;
 import tn.esprit.test1.Repositories.ChambreRepository;
 import tn.esprit.test1.Repositories.EtudiantRepository;
 import tn.esprit.test1.Repositories.ReservationRepository;
 import tn.esprit.test1.entities.Chambre;
 import tn.esprit.test1.entities.Etudiant;
 import tn.esprit.test1.entities.Reservation;
+import tn.esprit.test1.entities.Universite;
 
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
-public class ReservationService {
+@Service
+
+public class ReservationService implements IReservationService{
     ReservationRepository reservationRepository;
 
     public List<Reservation> retrieveAllReservations() {
@@ -55,7 +57,7 @@ public class ReservationService {
         this.chambreRepository = chambreRepository;
         this.etudiantRepository = etudiantRepository;
     }
-//service avancee 1ere qst
+    //service avancee 1ere qst
     public Reservation ajouterReservation(long idChambre, long cinEtudiant) {
         Chambre chambre = chambreRepository.findById(idChambre).orElse(null);
         Etudiant etudiant = etudiantRepository.findById(cinEtudiant).orElse(null);
@@ -81,12 +83,14 @@ public class ReservationService {
         }
         return null;
         //3eme qst
-        public List<Reservation> getReservationParAnneeUniversitaireEtNomUniversite(Date anneeUniversite, String nomUniversite) {
+        public List<Reservation> getReservationParAnneeUniversitaireEtNomUniversite(Date anneeUniversite, String nomUniversite)
+        {
             return reservationRepository.findByEtudiant_Universite_NomAndAnneeUniversitaire(nomUniversite, anneeUniversite);
         }
     }
     //4eme qst
     public List<Chambre> getChambresNonReserveParNomUniversiteEtTypeChambre(String nomUniversite, TypeChambre type) {
+        Object universiteRepository = null;
         Universite universite = universiteRepository.findByNom(nomUniversite);
 
         if (universite != null) {
@@ -107,5 +111,3 @@ public class ReservationService {
     }
 
 }
-
-

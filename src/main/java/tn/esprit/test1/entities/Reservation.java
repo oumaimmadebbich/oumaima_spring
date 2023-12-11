@@ -1,27 +1,32 @@
 package tn.esprit.test1.entities;
 
 import jakarta.persistence.*;
+import lombok.*;
 
-import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@RequiredArgsConstructor
 @Entity
-public class Reservation implements Serializable {
+public class Reservation {
     @Id
 
-
-    private Long idReservation;
-    private Date anneeUniversitaire ;
-    private Boolean estValide ;
-
-
-    @ManyToMany
-    private Set<Etudiant> etudiants;
-
-    public void setChambre(Chambre chambre) {
-    }
+    private String idReservation;
+    @NonNull
+    @Temporal(TemporalType.DATE)
+    private Date anneeUniversitaire;
+    private Boolean estValide;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "chambre_id")
+    private Chambre chambre;
+    @ManyToMany(mappedBy = "reservations")
+    private Set<Etudiant> etudiants=new HashSet<>();
 
     public void setEtudiant(Etudiant etudiant) {
     }
 }
+

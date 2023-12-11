@@ -1,33 +1,40 @@
 package tn.esprit.test1.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import lombok.*;
 
-import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@RequiredArgsConstructor
 @Entity
-
-public class
-Etudiant implements Serializable {
-
+public class Etudiant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="idEtudiant")
+
     private Long idEtudiant;
-    private String nomEt , prenomEt;
-    private Long cin ;
+    @NonNull
+    private  String nomEt;
+    @NonNull
+    private String prenomEt;
+    @Column(length = 8, unique = true)
+    @NonNull
+    private  Long cin;
     private String ecole;
-    private Date dateNaissance ;
-    public void setIdEtudiant(Long idEtudiant) {
-        this.idEtudiant = idEtudiant;
-    }
+    @Temporal(TemporalType.DATE)
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date dateNaissance;
+    //lazy le cahrgement se fait a la demande au moment d l'execution et eager avec les autres colonnes
 
-
-
-    public void setDateNaissance(Date dateNaissance) {
-        this.dateNaissance = dateNaissance;
-    }
-    @ManyToMany(mappedBy="etudiants")
-    private Set<Reservation> reservations;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "etudiants_reservations",
+            joinColumns = @JoinColumn(name = "etudiant_id",referencedColumnName = "idEtudiant"),
+            inverseJoinColumns = @JoinColumn(name = "reservation_id",referencedColumnName = "idReservation"))
+    private Set<Reservation> reservations=new HashSet<>();
 }
+

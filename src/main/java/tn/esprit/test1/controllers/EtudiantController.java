@@ -4,33 +4,49 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 import tn.esprit.test1.entities.Etudiant;
 import tn.esprit.test1.services.IEtudiantService;
+import java.util.List;
+@RequestMapping("/etudiants")
 @RestController
 @AllArgsConstructor
 @Slf4j
-@FieldDefaults(level = AccessLevel.PRIVATE)
-@RequestMapping("api/etudiants")
+@FieldDefaults(level= AccessLevel.PRIVATE)
 public class EtudiantController {
+    @Autowired
     IEtudiantService etudiantService;
-    @PostMapping("/addEtudiant")
+    //pour tester on doit introduire l url http://localhost:9995/universities/all
+    @GetMapping("/all")
+    public List<Etudiant> getAll(){
+        return  etudiantService.retrieveAllEtudiants();
+
+    }
+    //id on appel path variable{}
+    @GetMapping("/{id}")
+    public Etudiant getEtudiant(@PathVariable Long id){
+
+        return etudiantService.retrieveEtudiant(id);
+    }
+    @PostMapping("/add")
     public Etudiant addEtudiant(@RequestBody Etudiant e){
 
         return etudiantService.addEtudiant(e);
     }
-    @PostMapping("/modif_etudiant")
-    public Etudiant updateEtudiant(@RequestBody Etudiant e)
-    {
-        Etudiant etudiant=etudiantService.updateEtudiant(e);
-        return etudiant;
+    @PutMapping("/update")
+    public Etudiant updateEtudiant(@RequestBody Etudiant e){
+        return etudiantService.updateEtudiant(e);
     }
-//@PostMapping("/remove-etudiant/{id_Etudiant}")
+    @DeleteMapping("/{id}")
+    public void deleteEtudiant(@PathVariable Long id){
 
+        etudiantService.removeEtudiant(id);
+    }
+    @PostMapping("/addAll")
+    public List<Etudiant> addEtudiants (List<Etudiant> etudiants){
+        return etudiantService.addEtudiants(etudiants);
 
-
+    }
 
 }

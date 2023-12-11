@@ -1,12 +1,15 @@
 package tn.esprit.test1.services;
 
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 import tn.esprit.test1.Repositories.FoyerRepository;
 import tn.esprit.test1.Repositories.UniversiteRepository;
 import tn.esprit.test1.entities.Foyer;
 import tn.esprit.test1.entities.Universite;
+@AllArgsConstructor
+@Service
 
-
-public class UniversiteService {
+public class UniversiteService implements IUniversiteService{
     UniversiteRepository universiteRepository;
     FoyerRepository foyerRepository;
     public void UniversiteaffecterFoyerAUniversite(long idFoyer, String nomUniversite) {

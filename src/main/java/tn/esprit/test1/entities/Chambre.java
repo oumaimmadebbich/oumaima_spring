@@ -1,31 +1,33 @@
 package tn.esprit.test1.entities;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@RequiredArgsConstructor
 @Entity
-@Table(name ="Chambre")
-public class Chambre implements Serializable {
+
+public class Chambre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="idChambre")
     private Long idChambre;
+    @NonNull
     private Long numeroChambre;
-    private TypeChambre typeChambre;
-
-    public static void setBloc(Bloc bloc) {
-    }
-
-    public  enum TypeChambre{
-        Simple , Double , Triple
-    }
-
-
-    @ManyToOne
+    //traduire sous forme de chaine de caratere
+    @Enumerated(EnumType.STRING)
+    private TypeChambre typeC;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "bloc_id")
     private Bloc bloc;
+    @OneToMany(mappedBy = "chambre")
+    private Set<Reservation> reservations=new HashSet<>();
 
-    @OneToMany
-    private Set<Reservation> reservations;
+    public class TypeChambre {
+    }
 }
